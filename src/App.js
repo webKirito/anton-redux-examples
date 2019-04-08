@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import actions from './redux/actions'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const App = props => {
+  const { store, array, addTodo } = props
+  return (
+    <div>
+      <button onClick={() => addTodo({ name: "Name" })}>DIS</button>  
+      <ul>
+        {array.map(i => i.name)}
+      </ul>
+    </div>
+  )
 }
 
-export default App;
+// Gets fields from store and path to the components
+const mapStateToProps = state => ({
+  array: state.array,
+  store: state
+})
+
+// Sends actions from action creators to the store -> this action calls reducer -> state changes and we get new store -> we get new array and store variables
+const mapDispatchToProps = dispatch => ({
+  addTodo: (todo) => dispatch(actions.addTodo(todo)),
+})
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

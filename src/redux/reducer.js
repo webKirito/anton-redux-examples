@@ -5,7 +5,8 @@ import actions from './actions'
 // @Anton todo: Add counter field and write increase/decrease functionality
 // @Anton todo: Add update and delete actions for todos
 const initState = {
-  array: []
+  array: [],
+  count: 0
 }
 
 // Reducer rerun every time we dispatch an action
@@ -29,6 +30,15 @@ const reducer = (state = initState, action) => {
       const idx = state.array.findIndex((todo) => todo.id === action.todo.id);
       return {...state, array: [...state.array.slice(0, idx), ...state.array.slice(idx + 1)]};
       break;
+
+    case actions.UPDATE_COUNT:
+      console.log('UPDATE_COUNT',1);
+      const { count } = action;
+      return {
+        ...state, count
+      };
+      break;
+
     default:
       return state
   }

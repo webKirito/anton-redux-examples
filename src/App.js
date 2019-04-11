@@ -4,7 +4,7 @@ import actions from './redux/actions'
 
 
 const App = props => {
-  const { store, array, addTodo, toggleTodo, deleteTodo } = props;
+  const { store, array, addTodo, toggleTodo, deleteTodo, update_count, count } = props;
   // const [id, setId] = useState(100);
   //
   // const addHandler = () => {
@@ -20,8 +20,13 @@ const App = props => {
   //   }
   // }
   let id = new Date().getTime();
+  const handleIncrease = (count = 0) => {
+    count++;
+    update_count(count)
+  };
   return (
     <div>
+
       <button className="uk-button uk-button-primary" onClick={() => addTodo({ name: "Name", id: id, completed: false })}>ADD</button>
       <ul className="uk-list uk-list-striped">
         {array.map(i =>
@@ -38,6 +43,10 @@ const App = props => {
           </li>))
         }
       </ul>
+      <div>
+        <span className="uk-badge">{count}</span>
+      </div>
+      <button className="uk-button uk-button-danger" onClick={() => handleIncrease(count)}>+</button>
     </div>
   )
 }
@@ -53,7 +62,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addTodo: (todo) => dispatch(actions.addTodo(todo)),
   toggleTodo: (todo) => dispatch(actions.toggleTodo(todo)),
-  deleteTodo: (todo) => dispatch(actions.deleteTodo(todo))
+  deleteTodo: (todo) => dispatch(actions.deleteTodo(todo)),
+
+  update_count: (count) => dispatch(actions.update_count(count))
 })
 
 
